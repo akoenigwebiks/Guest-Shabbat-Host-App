@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Guest_Shabbat_Host_App.Views;
 using Guest_Shabbat_Host_App.DAL;
+using Guest_Shabbat_Host_App.DAL.Repositories;
 
 
 namespace Guest_Shabbat_Host_App
@@ -24,12 +25,17 @@ namespace Guest_Shabbat_Host_App
                 throw new ArgumentNullException("Connection string or database name is missing");
             }
 
-            DBContext db = new DBContext(conn);
-            db.CheckConnectionToDefaultDB(dbName);
+            DBContext dbCtx = new DBContext(conn);
+            dbCtx.CheckConnectionToDefaultDB(dbName);
+            SeedService seedService = new SeedService(dbCtx);
+            seedService.EnsureTablesAndSeedData();
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new HostForm());
+
+            var mainForm = new HostForm(new CategoryRepository(dbCtx));
+
+            Application.Run(mainForm);
         }
     }
 }

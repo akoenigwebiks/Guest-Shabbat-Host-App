@@ -32,7 +32,7 @@
             ListViewItem listViewItem2 = new ListViewItem("bar");
             label_cateogry = new ReaLTaiizor.Controls.MaterialLabel();
             textbox_category = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
-            label_changePassword = new Label();
+            label_addCategory = new Label();
             label_categoryList = new ReaLTaiizor.Controls.MaterialLabel();
             listView_categoryList = new ReaLTaiizor.Controls.MaterialListView();
             categories = new ColumnHeader();
@@ -83,18 +83,18 @@
             // 
             // label_changePassword
             // 
-            label_changePassword.AutoSize = true;
-            label_changePassword.BackColor = Color.FromArgb(61, 81, 181);
-            label_changePassword.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label_changePassword.ForeColor = SystemColors.ButtonHighlight;
-            label_changePassword.Location = new Point(42, 226);
-            label_changePassword.MinimumSize = new Size(251, 48);
-            label_changePassword.Name = "label_changePassword";
-            label_changePassword.Size = new Size(251, 48);
-            label_changePassword.TabIndex = 5;
-            label_changePassword.Text = "הוספה";
-            label_changePassword.TextAlign = ContentAlignment.MiddleCenter;
-            label_changePassword.Click += label_changePassword_Click;
+            label_addCategory.AutoSize = true;
+            label_addCategory.BackColor = Color.FromArgb(61, 81, 181);
+            label_addCategory.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label_addCategory.ForeColor = SystemColors.ButtonHighlight;
+            label_addCategory.Location = new Point(42, 226);
+            label_addCategory.MinimumSize = new Size(251, 48);
+            label_addCategory.Name = "label_changePassword";
+            label_addCategory.Size = new Size(251, 48);
+            label_addCategory.TabIndex = 5;
+            label_addCategory.Text = "הוספה";
+            label_addCategory.TextAlign = ContentAlignment.MiddleCenter;
+            label_addCategory.Click += label_addCategory_Click;
             // 
             // label_categoryList
             // 
@@ -143,7 +143,7 @@
             ClientSize = new Size(334, 664);
             Controls.Add(label_categoryList);
             Controls.Add(listView_categoryList);
-            Controls.Add(label_changePassword);
+            Controls.Add(label_addCategory);
             Controls.Add(textbox_category);
             Controls.Add(label_cateogry);
             Name = "HostForm";
@@ -158,7 +158,7 @@
 
         private ReaLTaiizor.Controls.MaterialLabel label_cateogry;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit textbox_category;
-        private Label label_changePassword;
+        private Label label_addCategory;
         private ReaLTaiizor.Controls.MaterialLabel label_categoryList;
         private ReaLTaiizor.Controls.MaterialListView listView_categoryList;
         private ColumnHeader categories;

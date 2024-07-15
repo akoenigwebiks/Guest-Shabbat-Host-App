@@ -1,18 +1,19 @@
-﻿using ReaLTaiizor.Forms;
+﻿using Guest_Shabbat_Host_App.DAL.Models;
+using Guest_Shabbat_Host_App.DAL.Repositories;
+using ReaLTaiizor.Forms;
 using System.Data;
 
 namespace Guest_Shabbat_Host_App.Views
 {
-    public partial class HostForm : MaterialForm
+    internal partial class HostForm : MaterialForm
     {
+        private CategoryRepository _categoryRepository;
         private DataTable Categories;
-        public HostForm()
+        public HostForm(CategoryRepository? categoryRepository)
         {
             InitializeComponent();
-            Categories = new();
-            Categories.Columns.Add("categories");
-            Categories.Rows.Add("טונה");
-            LoadCategories(Categories);
+            _categoryRepository = categoryRepository;
+            LoadCategories(_categoryRepository.FindAll());
         }
 
         private void LoadCategories(DataTable categories)
@@ -43,7 +44,13 @@ namespace Guest_Shabbat_Host_App.Views
             }
         }
 
-        private void label_changePassword_Click(object sender, EventArgs e)
+        private void LoadCategories(List<CategoryModel> categories)
+        {
+            listView_categoryList.Items.Clear(); // Clear existing items
+            listView_categoryList.Items.AddRange(categories.Select(category => new ListViewItem(category.CategoryName)).ToArray());
+        }
+
+        private void label_addCategory_Click(object sender, EventArgs e)
         {
             string category = textbox_category.Text.Trim();
             if (string.IsNullOrEmpty(category))
@@ -52,16 +59,14 @@ namespace Guest_Shabbat_Host_App.Views
                 return;
             }
 
-            // Check if the category already exists in the DataTable
-            if (Categories.AsEnumerable().Any(row => row["categories"].ToString().Equals(category, StringComparison.OrdinalIgnoreCase)))
+            bool sucess = _categoryRepository.Insert(new CategoryModel(category, null));
+            if (!sucess)
             {
-                MessageBox.Show("הקטגוריה כבר קיימת");
-                return;
+                MessageBox.Show("לא ניתן להוסיף קטגוריה");
             }
-
-            // Add the new category
-            Categories.Rows.Add(category);
-            LoadCategories(Categories);  // Refresh the list view
+  
+            LoadCategories(_categoryRepository.FindAll());
+            textbox_category.Text = "";
         }
     }
 }
