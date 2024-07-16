@@ -5,14 +5,15 @@ namespace Guest_Shabbat_Host_App.DAL
     internal class SeedService
     {
         private DBContext _dbContext;
-        public SeedService(DBContext dBContext)
+        private string DBName;
+        public SeedService(DBContext dBContext,string dBName)
         {
             _dbContext = dBContext;
+            DBName = dBName;
         }
         public void EnsureTablesAndSeedData()
         {
-            string sqlScript = @"USE Shabbat;
-                                GO
+            string sqlScript = @$"USE {DBName};
 
                                 DECLARE @TableCreated INT = 0;
 
@@ -20,14 +21,14 @@ namespace Guest_Shabbat_Host_App.DAL
 
                                 BEGIN TRY
 
-                                    IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'FoodCategories' AND type = 'U')
+                                    IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Food' AND type = 'U')
                                     BEGIN
-                                        CREATE TABLE FoodCategories
+                                        CREATE TABLE Food
                                         (
                                             CategoryID INT PRIMARY KEY IDENTITY(1,1),
                                             CategoryName NVARCHAR(255) NOT NULL UNIQUE
                                         );
-                                        INSERT INTO FoodCategories (CategoryName)
+                                        INSERT INTO Food (CategoryName)
                                         VALUES (N'דגים'), (N'בשר'), (N'משקאות'), (N'סלטים'), (N'קינוחים');
                                         SET @TableCreated = 1; -- Set to 1 to indicate that the table was created
                                     END
@@ -40,9 +41,9 @@ namespace Guest_Shabbat_Host_App.DAL
                                 END CATCH
                                 SELECT @TableCreated AS IsCreated;";
             _dbContext.ExecuteNonQuery(sqlScript, null);
-            DataTable result = _dbContext.ExecuteQuery("SELECT COUNT(*) as test FROM FoodCategories;", null);
+            DataTable result = _dbContext.ExecuteQuery("SELECT COUNT(*) as test FROM Food;", null);
             if (result.Rows.Count<=0) {
-                throw new Exception("FoodCategories Seed failed...");
+                throw new Exception("Food Seed failed...");
             }
         }
     }

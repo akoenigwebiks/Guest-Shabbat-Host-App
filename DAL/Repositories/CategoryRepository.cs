@@ -16,7 +16,7 @@ namespace Guest_Shabbat_Host_App.DAL.Repositories
         public List<CategoryModel> FindAll()
         {
             var categories = new List<CategoryModel>();
-            string query = "SELECT CategoryID, CategoryName FROM FoodCategories";
+            string query = "SELECT CategoryID, CategoryName FROM Food";
 
             DataTable result = _dbContext.ExecuteQuery(query, null);
             foreach (DataRow row in result.Rows)
@@ -29,7 +29,7 @@ namespace Guest_Shabbat_Host_App.DAL.Repositories
 
         public CategoryModel FindById(int categoryId)
         {
-            string query = "SELECT CategoryID, CategoryName FROM FoodCategories WHERE CategoryID = @CategoryID";
+            string query = "SELECT CategoryID, CategoryName FROM Food WHERE CategoryID = @CategoryID";
             SqlParameter[] parameters = { new SqlParameter("@CategoryID", categoryId) };
 
             DataTable result = _dbContext.ExecuteQuery(query, parameters);
@@ -43,7 +43,7 @@ namespace Guest_Shabbat_Host_App.DAL.Repositories
 
         public bool Insert(CategoryModel category)
         {
-            string query = "INSERT INTO FoodCategories (CategoryName) VALUES (@CategoryName)";
+            string query = "INSERT INTO Food (CategoryName) VALUES (@CategoryName)";
             SqlParameter[] parameters = { new SqlParameter("@CategoryName", category.CategoryName) };
 
             int rowsAffected = _dbContext.ExecuteNonQuery(query, parameters);
@@ -52,7 +52,7 @@ namespace Guest_Shabbat_Host_App.DAL.Repositories
 
         public bool Update(CategoryModel category)
         {
-            string query = "UPDATE FoodCategories SET CategoryName = @CategoryName WHERE CategoryID = @CategoryID";
+            string query = "UPDATE Food SET CategoryName = @CategoryName WHERE CategoryID = @CategoryID";
             SqlParameter[] parameters = {
                 new SqlParameter("@CategoryName", category.CategoryName),
                 new SqlParameter("@CategoryID", category.CategoryID)
@@ -64,7 +64,7 @@ namespace Guest_Shabbat_Host_App.DAL.Repositories
 
         public bool Delete(int categoryId)
         {
-            string query = "DELETE FROM FoodCategories WHERE CategoryID = @CategoryID";
+            string query = "DELETE FROM Food WHERE CategoryID = @CategoryID";
             SqlParameter[] parameters = { new SqlParameter("@CategoryID", categoryId) };
 
             int rowsAffected = _dbContext.ExecuteNonQuery(query, parameters);

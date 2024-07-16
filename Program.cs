@@ -27,7 +27,7 @@ namespace Guest_Shabbat_Host_App
 
             DBContext dbCtx = new DBContext(conn);
             dbCtx.CheckConnectionToDefaultDB(dbName);
-            SeedService seedService = new SeedService(dbCtx);
+            SeedService seedService = new SeedService(dbCtx,dbName);
             seedService.EnsureTablesAndSeedData();
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
